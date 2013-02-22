@@ -9,6 +9,9 @@ API_KEY_NAME   = "dss-rm-api-examples"
 API_KEY_SECRET = "da48e7c4702f2a493a7878cab77405a5"
 
 require './models/person.rb'
+require './models/group.rb'
+require './models/application.rb'
+require './models/role.rb'
 
 # Fetch a person and display their name
 p = Person.find("cthielen")
