@@ -15,9 +15,26 @@ p = Person.find("cthielen")
 puts p.name, "\n"
 
 # Print out their roles grouped by application
-p.roles.group_by(&:application_name).each do |i, roles|
-  puts "Application: #{i}"
+p.roles.group_by(&:application_id).each do |i, roles|
+  puts "Application ID: #{i}"
   roles.each do |r|
     puts "\tRole: [#{r.token}, #{r.id}] #{r.name}"
   end
 end
+
+# View all roles for an application
+
+
+# View all members of a role from that application
+
+
+# Give a person that role
+
+
+# Take that role away
+
+
+# Create a group with two smartrules
+
+
+# View the members of that group
