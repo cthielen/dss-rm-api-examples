@@ -26,7 +26,8 @@ p.roles.group_by(&:application_id).each do |i, roles|
 end
 
 # View all roles for an application
-
+a = Application.find("DSS Roles Management")
+puts a.name, "\n"
 
 # View all members of a role from that application
 
