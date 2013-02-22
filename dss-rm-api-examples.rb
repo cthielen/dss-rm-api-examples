@@ -4,9 +4,9 @@ Bundler.require
 
 require 'pp'
 
-RM_INSTANCE    = "http://dss-rm.dev/"
-API_KEY_NAME   = "Test Key"
-API_KEY_SECRET = "c787a028023f19870728f07be38979e2"
+RM_INSTANCE    = "https://roles.dss.ucdavis.edu/"
+API_KEY_NAME   = "CAES"
+API_KEY_SECRET = "804fe2111c4c4950ef9ad709995f6881"
 
 require './models/person.rb'
 require './models/group.rb'
