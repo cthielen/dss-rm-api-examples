@@ -4,9 +4,9 @@ Bundler.require
 
 require 'pp'
 
-RM_INSTANCE    = "https://roles.dss.ucdavis.edu/"
-API_KEY_NAME   = "CAES"
-API_KEY_SECRET = "804fe2111c4c4950ef9ad709995f6881"
+RM_INSTANCE    = "http://dss-rm.dev/"
+API_KEY_NAME   = "dss-rm-api-examples"
+API_KEY_SECRET = "da48e7c4702f2a493a7878cab77405a5"
 
 require './models/person.rb'
 require './models/group.rb'
@@ -49,23 +49,33 @@ begin
   puts "\n"  
 
   # View all members of a role from that application
-  puts "Searching for the first role seen above and printing all its entities (members)..."
+  puts "Searching for the first role seen above (#{first_application_role_id_seen}) and printing all its entities (members)..."
   r = Role.find(first_application_role_id_seen)
   puts r.name, "\n"
   
   # Print all entities of this application
   r.entities.each do |e|
-    puts "\t#{e.id} #{e.name}"
+    puts " %-7s %-30s" % [e.id, e.name]
   end
+  
+  # Back up the role_ids of an individual so we don't destroy them with this example
+  role_ids = p.role_ids
 
   # Give a person that role
-
+  p.role_ids << first_application_role_id_seen
+  p.save
 
   # Take that role away
-
+  p.role_ids.delete(first_application_role_id_seen)
+  p.save
+  
+  # Restore original role_ids (necessary in case first_application_role_id_seen was assigned to them before example began)
+  p.role_ids = role_ids
+  p.save
 
   # Create a group with two smartrules
-
+  g = Group.new
+  
 
   # View the members of that group
 
