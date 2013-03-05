@@ -10,6 +10,7 @@ API_KEY_SECRET = "da48e7c4702f2a493a7878cab77405a5"
 
 require './models/person.rb'
 require './models/group.rb'
+require './models/group_rule.rb'
 require './models/application.rb'
 require './models/role.rb'
 
@@ -73,9 +74,15 @@ begin
   p.role_ids = role_ids
   p.save
 
-  # Create a group with two smartrules
+  # Create a group with a smartrule
   g = Group.new
-  
+  g.name = "Test Group (" + Time.now.to_s + ")"
+  r = GroupRule.new
+  r.column = "loginid"
+  r.condition = "is"
+  r.value = "cthielen"
+  g.rules << r
+  g.save
 
   # View the members of that group
 
