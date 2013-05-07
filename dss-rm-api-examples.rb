@@ -13,11 +13,26 @@ require './models/group.rb'
 require './models/group_rule.rb'
 require './models/application.rb'
 require './models/role.rb'
+require './models/entity.rb'
 
 begin
   # Used for example purposes
   first_application_id_seen = nil
   first_application_role_id_seen = nil
+  
+  # Search for all people with 'thi' in their name
+  puts "Searching for any people with 'thi' in their name ..."
+  people = Person.find(:all, :params => {:q => "thi"})
+  people.each do |p|
+    puts "\tResult: #{p.name}"
+  end
+
+  # Search all entities with 'DSS' in their name
+  puts "Searching for all entities (people and groups) with 'DSS' in their name ..."
+  entities = Entity.find(:all, :params => {:q => "DSS"})
+  entities.each do |e|
+    puts "\tResult: #{e.name}"
+  end
   
   # Fetch a person and display their name
   puts "Searching for user with login ID 'cthielen' ..."
