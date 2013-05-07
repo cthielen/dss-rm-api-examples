@@ -6,7 +6,7 @@ require 'pp'
 
 RM_INSTANCE    = "http://dss-rm.dev/"
 API_KEY_NAME   = "dss-rm-api-examples"
-API_KEY_SECRET = "da48e7c4702f2a493a7878cab77405a5"
+API_KEY_SECRET = "17da2fc3ff24a4366d63e40a976bb240"
 
 require './models/person.rb'
 require './models/group.rb'
@@ -36,7 +36,7 @@ begin
 
   puts "\n"
 
-  puts "Searching for the first application seen above and printing all its roles..."
+  puts "Searching for the first application seen above (#{first_application_id_seen}) and printing all its roles..."
   # View all roles for an application
   a = Application.find(first_application_id_seen)
   puts a.name, "\n"
@@ -59,30 +59,30 @@ begin
     puts " %-7s %-30s" % [e.id, e.name]
   end
   
-  # Back up the role_ids of an individual so we don't destroy them with this example
-  role_ids = p.role_ids
-
-  # Give a person that role
-  p.role_ids << first_application_role_id_seen
-  p.save
-
-  # Take that role away
-  p.role_ids.delete(first_application_role_id_seen)
-  p.save
-  
-  # Restore original role_ids (necessary in case first_application_role_id_seen was assigned to them before example began)
-  p.role_ids = role_ids
-  p.save
+  # # Back up the role_ids of an individual so we don't destroy them with this example
+  # role_ids = p.role_ids
+  # 
+  # # Give a person that role
+  # p.role_ids << first_application_role_id_seen
+  # p.save
+  # 
+  # # Take that role away
+  # p.role_ids.delete(first_application_role_id_seen)
+  # p.save
+  # 
+  # # Restore original role_ids (necessary in case first_application_role_id_seen was assigned to them before example began)
+  # p.role_ids = role_ids
+  # p.save
 
   # Create a group with a smartrule
   g = Group.new
   g.name = "Test Group (" + Time.now.to_s + ")"
-  r = GroupRule.new
-  r.column = "loginid"
-  r.condition = "is"
-  r.value = "cthielen"
-  g.rules << r
-  g.save
+  #r = GroupRule.new
+  #r.column = "loginid"
+  #r.condition = "is"
+  #r.value = "cthielen"
+  #g.rules << r
+  #g.save
 
   # View the members of that group
 
