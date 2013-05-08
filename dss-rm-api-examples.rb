@@ -26,21 +26,21 @@ begin
   first_application_role_id_seen = nil
   
   # Search for all people with 'thi' in their name
-  puts "Searching for any people with 'thi' in their name ..."
+  puts "\nSearching for any people with 'thi' in their name ..."
   people = Person.find(:all, :params => {:q => "thi"})
   people.each do |p|
     puts "\tResult: #{p.name}"
   end
 
   # Search all entities with 'DSS' in their name
-  puts "Searching for all entities (people and groups) with 'DSS' in their name ..."
+  puts "\nSearching for all entities (people and groups) with 'DSS' in their name ..."
   entities = Entity.find(:all, :params => {:q => "DSS"})
   entities.each do |e|
     puts "\tResult: #{e.name}"
   end
   
   # Fetch a person and display their name
-  puts "Searching for user with login ID 'cthielen' ..."
+  puts "\nSearching for user with login ID 'cthielen' ..."
   p = Person.find("cthielen")
   puts p.name, "\n"
 
@@ -79,6 +79,8 @@ begin
     puts " %-7s %-30s" % [e.id, e.name]
   end
   
+  puts "\n"
+  
   # # Back up the role_ids of an individual so we don't destroy them with this example
   # role_ids = p.role_ids
   # 
@@ -94,17 +96,34 @@ begin
   # p.role_ids = role_ids
   # p.save
 
+  group_name = "Test Group (" + Time.now.to_s + ")"
+  puts "Creating a group (#{group_name}) with a rule to include all people with department 'DSS IT SERVICE CENTER'..."
   # Create a group with a smartrule
   g = Group.new
-  g.name = "Test Group (" + Time.now.to_s + ")"
-  #r = GroupRule.new
-  #r.column = "loginid"
-  #r.condition = "is"
-  #r.value = "cthielen"
-  #g.rules << r
-  #g.save
+  g.name = group_name
+  g.save
+  
+  # Create a rule and add it to the above group
+  r = GroupRule.new
+  r.column = "ou"
+  r.condition = "is"
+  r.value = "DSS IT SERVICE CENTER"
+  r.group_id = g.id
+  r.save
 
-  # View the members of that group
+  # View the members of that rule-calculated group
+  puts "\nListing rule-calculated members..."
+  g = Group.find(g.id)
+  g.members.each do |m|
+    puts "\tMember: #{m.name}"
+  end
+
+  puts "\n"
+  
+  # Remove the test group
+  puts "Deleting the test group ..."
+  g.destroy
+  puts "\n"
 
 rescue ActiveResource::UnauthorizedAccess
   puts "Couldn't log in. Double-check the API key."
