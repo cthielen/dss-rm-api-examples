@@ -2,11 +2,16 @@ require 'rubygems'
 require 'bundler/setup'
 Bundler.require
 
+require 'yaml'
 require 'pp'
 
-RM_INSTANCE    = "http://dss-rm.dev/"
-API_KEY_NAME   = "dss-rm-api-examples"
-API_KEY_SECRET = "17da2fc3ff24a4366d63e40a976bb240"
+begin
+  # Load the API key information
+  $API_KEY = YAML.load_file('api_key.yml')
+rescue SystemCallError
+  puts "Cannot find api_key.yml. Did you forget to copy api_key.example.yml to api_key.yml and fill in the proper details?"
+  exit
+end
 
 require './models/person.rb'
 require './models/group.rb'
